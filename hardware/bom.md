@@ -54,18 +54,45 @@ Selected: Armsom Sige7
 
 ## CAN HAT
 
+Selected: 2-Channel Isolated CAN FD Expansion HAT
+
 **Purpose:** CAN / CAN FD interface with galvanic isolation.
 
-**Selected:** TBD
+<img width="495" height="438" alt="image" src="https://github.com/user-attachments/assets/0457def1-a337-4d23-af31-e7c3297d1750" />
 
-**Notes:**
-- Channels: 7
-- Protocol: CAN FD
-- Interface: SPI
-- Isolation: yes
-- Termination: on-board
+## 2-CH CAN FD Shield
 
-**Source:** TBD
+**Controller:** Microchip MCP2518FD / MCP2517FD
+
+**Transceiver:** TJA1043 / TJA1057 (CAN FD)
+
+**Max Bitrate:** 8 Mbps (Data), 5 Mbps (Arbitration)
+
+**Interface:** SPI (up to 20 MHz)
+
+**Channels:** 2 independent CAN FD channels
+
+**Power input:** 3.3V / 5V (from 40-pin GPIO header)
+
+**Operating temperature:** -40…85 °C (Industrial)
+
+**Dimensions:** Standard HAT form factor (e.g., 65 × 56 mm)
+
+**OS/Driver support:** Linux (SocketCAN, `mcp251xfd` driver), Windows
+
+**GPIO usage:**
+
+- SPI Bus: 3 pins (SCK, MOSI, MISO) - shared
+- Chip Select: 2 pins (1 per channel)
+- Interrupt: 2 pins (1 per channel)
+- Total: 7 GPIO pins + Power/GND
+
+**SPI mapping (example for 4 shields on 1 bus):**
+
+- Shield 1: CS0, CS1, INT0, INT1
+- Shield 2: CS2, CS3, INT2, INT3
+- Shield 3: CS4, CS5, INT4, INT5
+- Shield 4: CS6, CS7, INT6, INT7
 
 ---
 
