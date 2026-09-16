@@ -8,17 +8,21 @@ Full summary table at the end.
 
 ## SBC
 
-**Selected:** ArmSoM-Sige5
+Selected: Armsom Sige7
 
-<img width="774" height="1087" alt="image" src="https://github.com/user-attachments/assets/01f75eb4-8c8e-45f0-8fbc-cbdb3870160d" />
+<img width="798" height="1103" alt="image" src="https://github.com/user-attachments/assets/cede7d53-b3fc-45ca-bbf4-afe67acceb93" />
 
-**SoC:** Rockchip RK3576 (8nm)
-- 4x Cortex-A72 @ 2.2 GHz
-- 4x Cortex-A53 @ 1.8 GHz
+**SoC:** Rockchip RK3588 (8nm)
 
-**Memory:** 8 / 16 GB LPDDR4x
+**CPU:** 4x Cortex-A76 @ 2.4 GHz + 4x Cortex-A55 @ 1.8 GHz
 
-**Storage:** 32 / 64 / 128 GB eMMC
+**GPU:** ARM Mali-G610 MP4
+
+**NPU:** 6 TOPS (INT8)
+
+**Memory:** 8 / 16 / 32 GB LPDDR4/LPDDR4x
+
+**Storage:** 64 / 128 GB eMMC, MicroSD card slot
 
 **Power input:** 5–23 V DC (wide range), USB-C PD
 
@@ -26,20 +30,25 @@ Full summary table at the end.
 
 **Dimensions:** 92 × 62 × 14.6 mm
 
-**OS support:** Armbian (community), Debian 12, Ubuntu
+**OS support:** Debian 12, Ubuntu 22.04/24.04, Android 12, Armbian, Arch Linux, openSUSE
 
 **Interfaces:**
-- CAN: 2x native CAN controllers (RK3576), routed to 40-pin GPIO, external transceiver required
-- PCIe: 1x M.2 Key M 2280 (PCIe 2.1 x1, NVMe only, no M.2 SATA)
-- RTC: on-board LK8563S (I2C, with battery)
-- USB: available for cellular modem and GNSS
+
+- Ethernet: 2x 2.5 Gbps RJ45
+- WiFi/BT: Onboard AP6275P (WiFi 6, BT 5)
+- USB: 1x USB 2.0 Type-A, 1x USB 3.0 Type-A, 1x USB 3.0 Type-C (DP Alt Mode)
+- Video Output: 1x HDMI 2.1 (8K@60), 1x Type-C DP
+- Camera: 2x MIPI-CSI connectors
+- Display: 1x MIPI-DSI connector
+- PCIe: 1x M.2 Key M 2280 (PCIe 3.0 x4, NVMe only, no M.2 SATA)
+- RTC: On-board, with battery connector
 - GPIO: 40-pin header for expansion
 
-**Notes:**
-- Only one M.2 slot, Key M — cannot host both NVMe and a cellular module simultaneously.
-- Cellular modem must use USB.
-- GNSS must use USB or UART.
-- For more than 2 CAN channels, use SPI-CAN controllers (e.g. MCP2518FD) on the 40-pin header.
+**SPI:**
+
+- SPI0: SPI0_MOSI_M2, SPI0_MISO_M2, SPI0_CLK_M2, SPI0_CS0_M2, SPI0_CS1_M2
+- SPI1: SPI1_CLK_M1, SPI1_MOSI_M1, SPI1_MISO_M1, SPI1_CS0_M1, SPI1_CS1_M1
+- SPI3: SPI3_MOSI, SPI3_MISO, SPI3_CLK_M0, SPI4_CS1
 
 ---
 
