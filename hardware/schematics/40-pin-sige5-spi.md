@@ -1,21 +1,40 @@
-### SPI0
+# Sige5 vs Sige7 SPI comparison
 
+## 40-pin Sige5 SPI interfaces
+
+<img width="1434" height="719" alt="image" src="https://github.com/user-attachments/assets/ca39d058-0bdc-4a0b-8b8d-bd94b41f5e81" />
+
+### SPI4
 | Pin | GPIO | Сигнал     |
 |-----|------|------------|
-| 19  | —    | SPI0_TXD   |
-| 21  | —    | SPI0_RXD   |
-| 23  | —    | SPI0_CLK   |
-| 24  | 0    | SPI0_CS0   |
-| 26  | —    | SPI0_CS1   |
+| 19  |  1_B2   | SPI4_MOSI_M0   |
+| 21  | 1_B1    | SPI4_MISO_M0   |
+| 23  |  1_B3   | SPI4_CLK_M0   |
+| 24  |  1_B4   | SPI4_CSN0_M0   |
+
+
+## 40-pin Sige7 SPI interfaces
+
+<img width="1469" height="735" alt="image" src="https://github.com/user-attachments/assets/c6f10b80-0e9e-440d-957f-f029e7bc7cc3" />
+
+### SPI0
+| Pin | GPIO | Сигнал     |
+|-----|------|------------|
+| 19  |  1_B2   | SPI0_MOSI_M2   |
+| 21  | 1_B1    | SPI0_MISO_M2   |
+| 23  |  1_B3   | SPI0_CLK_M2   |
+| 24  |  1_B4   | SPI0_CS0_M2   |
+| 26  |  1_B5   | SPI0_CS1_M2   |
 
 ### SPI1
 
 | Pin | GPIO | Сигнал       |
 |-----|------|--------------|
 | 11  | 3-C1 | SPI1_CLK_M1  |
-| 13  | 3-B7 | MOSI         |
-| 15  | 3-C0 | MISO         |
-| 32  | 2-C0 | SPI1_CS0     |
+| 13  | 3-C0 | SPI1_MOSI_M1         |
+| 15  | 3-B7 | SPI1_MISO_M1         |
+| 32  | 3-C2 | SPI1_CS0_M1     |
+| 7  | 3-C3 | SPI1_CS1_M1     |
 
 ### SPI3
 
