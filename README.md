@@ -13,7 +13,7 @@ debugging, and reverse engineering.
 - SBC: ARM64 or RISC-V compatible
 - CAN interface: 7-CH CAN FD HAT modules with galvanic isolation
 - Storage: eMMC and single M.2 NVME / M.2 SATA or RAID-10 array for data reliability
-- RTC: on-HAT or external
+- RTC
 - GNSS
 - 4G / 5G / LTE modem
 - Power: 12 V automotive input with load-dump protection and UPS (internal or external)
