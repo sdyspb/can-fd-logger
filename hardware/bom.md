@@ -54,7 +54,7 @@ Selected: Armsom Sige7
 
 ## CAN HAT
 
-Selected: 2-Channel Isolated CAN FD Expansion HAT
+Selected: [2-Channel Isolated CAN FD Expansion HAT](https://www.waveshare.com/2-ch-can-fd-hat.htm?amazon)
 
 **Purpose:** CAN / CAN FD interface with galvanic isolation.
 
