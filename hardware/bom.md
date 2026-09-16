@@ -8,17 +8,38 @@ Full summary table at the end.
 
 ## SBC
 
-**Purpose:** Main compute unit running Armbian.
+**Selected:** ArmSoM-Sige5
 
-**Selected:** TBD
+<img width="774" height="1087" alt="image" src="https://github.com/user-attachments/assets/01f75eb4-8c8e-45f0-8fbc-cbdb3870160d" />
+
+**SoC:** Rockchip RK3576 (8nm)
+- 4x Cortex-A72 @ 2.2 GHz
+- 4x Cortex-A53 @ 1.8 GHz
+
+**Memory:** 8 / 16 GB LPDDR4x
+
+**Storage:** 32 / 64 / 128 GB eMMC
+
+**Power input:** 5–23 V DC (wide range), USB-C PD
+
+**Operating temperature:** 0…80 °C
+
+**Dimensions:** 92 × 62 × 14.6 mm
+
+**OS support:** Armbian (community), Debian 12, Ubuntu
+
+**Interfaces:**
+- CAN: 2x native CAN controllers (RK3576), routed to 40-pin GPIO, external transceiver required
+- PCIe: 1x M.2 Key M 2280 (PCIe 2.1 x1, NVMe only, no M.2 SATA)
+- RTC: on-board LK8563S (I2C, with battery)
+- USB: available for cellular modem and GNSS
+- GPIO: 40-pin header for expansion
 
 **Notes:**
-- Architecture: ARM64 / RISC-V
-- RAM: TBD
-- eMMC: TBD
-- Interfaces required: PCIe, USB, SPI, I2C, UART, GPIO
-
-**Source:** TBD
+- Only one M.2 slot, Key M — cannot host both NVMe and a cellular module simultaneously.
+- Cellular modem must use USB.
+- GNSS must use USB or UART.
+- For more than 2 CAN channels, use SPI-CAN controllers (e.g. MCP2518FD) on the 40-pin header.
 
 ---
 
