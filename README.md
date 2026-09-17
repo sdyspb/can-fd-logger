@@ -28,8 +28,6 @@ can-logger/
 ├── hardware/
 │   ├── README.md              # selected boards, modules, links
 │   ├── bom.md                 # bill of materials
-│   ├── wiring.md              # wiring diagram
-│   ├── power.md               # 12V → 5V power, protection
 │   ├── schematics/            # module, shield and custom board schematics
 │   └── custom/                # custom boards (kicad + gerbers)
 │
