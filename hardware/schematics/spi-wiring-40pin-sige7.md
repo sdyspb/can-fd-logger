@@ -195,3 +195,75 @@ flowchart LR
     class MAP_A,MAP_B adapter
     class CAN0,CAN1,CAN2,CAN3 shield
 ```
+
+## Appendix: Shield Hardware Modification Reference
+
+This section is a reference for modifying the 0R resistor jumpers on the CAN FD shields, as described in the manufacturer's official "Stack Mode" documentation. These modifications determine which physical pins on the 40-pin header are used for the **Chip Select (CE)** and **Interrupt (INT)** signals of each CAN controller.
+
+### Principle
+
+> **Principle:** Modify the 0R resistor in the `CAN_x PIN SELECTION` (where `x` is `0` or `1`) area on the back of the shield to change the CE and INT pins used by the CAN controller.
+>
+> **Note:** When stacking is required, the hardware configuration must be kept in **dual SPI mode** (`'A'` mode, which is the default setting).
+
+Each shield contains two independent CAN controllers (`CAN_0` and `CAN_1`), and each has its own set of selectable CE/INT pin combinations.
+
+### CAN_0 Pin Selection
+
+`CAN_0` has **two groups** to choose from:
+
+| CE_0 | INT_0 | Config Setting | Description |
+| :---: | :---: | :--- | :--- |
+| `CE0` | `D25` | `dtoverlay=mcp251xfd,spi0-0,interrupt=25` | CAN_0 uses `SPI0-0`, interrupt pin is `25` |
+| `CE1` | `D13` | `dtoverlay=mcp251xfd,spi0-1,interrupt=13` | CAN_0 uses `SPI0-1`, interrupt pin is `13` |
+
+### CAN_1 Pin Selection
+
+`CAN_1` has **three groups** to choose from:
+
+| CE_1 | INT_1 | Config Setting | Description |
+| :---: | :---: | :--- | :--- |
+| `SPI1_CE0` | `D24` | `dtoverlay=mcp251xfd,spi1-0,interrupt=24` | CAN_1 uses `SPI1-0`, interrupt pin is `24` |
+| `SPI1_CE1` | `D23` | `dtoverlay=mcp251xfd,spi1-1,interrupt=23` | CAN_1 uses `SPI1-1`, interrupt pin is `23` |
+| `SPI1_CE2` | `D22` | `dtoverlay=mcp251xfd,spi1-2,interrupt=22` | CAN_1 uses `SPI1-2`, interrupt pin is `22` |
+
+> **Note:** A careful reader may notice that one configuration group is missing from the table above. This is **reserved for compatibility with older hardware versions**, and new users can safely ignore it.
+
+### Example: Configuring Two Shields for 4-Channel CAN
+
+**Question:** If you have two shields, how should they be configured to use 4-way CAN?
+
+**Answer:**
+
+- **First shield:** Leave unmodified (default configuration, as shown in the *left figure* of the manufacturer's documentation).
+- **Second shield:** Modify the 0R jumpers on the back as follows:
+  - **`CAN_0` configuration area:** Select `CE1` and `D13`.
+  - **`CAN_1` configuration area:** Select `SPI1_CE1` and `D23`.
+
+<img width="901" height="373" alt="image" src="https://github.com/user-attachments/assets/cb33b663-f9d2-417a-bf64-c670dfc15c78" />
+
+### Jumper Settings for This Adapter Board
+
+For the adapter board described in this document (connecting **four** shields), the required jumper settings are:
+
+| Shield | CAN Controller | CE Setting | INT Setting | SPI Bus | Notes |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **Shield 1** (Pair A) | CAN_0 | `CE0` | `D25` | SPI0-0 | Default |
+| **Shield 1** (Pair A) | CAN_1 | `SPI1_CE1` | `D23` | SPI1-1 | Modified |
+| **Shield 2** (Pair A) | CAN_0 | `CE1` | `D13` | SPI0-1 | Modified |
+| **Shield 2** (Pair A) | CAN_1 | `SPI1_CE2` | `D22` | SPI1-2 | Modified |
+| **Shield 3** (Pair B) | CAN_0 | `CE0` | `D25` | SPI0-0 | Default |
+| **Shield 3** (Pair B) | CAN_1 | `SPI1_CE1` | `D23` | SPI1-1 | Modified |
+| **Shield 4** (Pair B) | CAN_0 | `CE1` | `D13` | SPI0-1 | Modified |
+| **Shield 4** (Pair B) | CAN_1 | `SPI1_CE2` | `D22` | SPI1-2 | Modified |
+
+> **Important:** Since the adapter board uses **software CS (GPIO)** for the second pair of shields, the `config settings` shown in the tables above (which use standard `dtoverlay` syntax) are provided **for reference only**. The actual Device Tree configuration for this project must be customized, using `cs-gpios` and explicit `interrupts` properties.
+
+### Reference Images
+
+Place the manufacturer's figures in the repository (e.g., under `docs/images/`) and reference them here:
+
+```markdown
+![Default Configuration (First Shield)](docs/images/shield_default.png)
+![Modified Configuration (Second Shield)](docs/images/shield_modified.png)
+```
