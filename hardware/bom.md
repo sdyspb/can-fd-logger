@@ -8,7 +8,7 @@ Full summary table at the end.
 
 ## SBC
 
-Selected: Armsom Sige7
+Selected: [Armsom Sige7](https://docs.armsom.org/armsom-sige7)
 
 <img width="798" height="1103" alt="image" src="https://github.com/user-attachments/assets/cede7d53-b3fc-45ca-bbf4-afe67acceb93" />
 
@@ -193,10 +193,10 @@ Selected: [2-Channel Isolated CAN FD Expansion HAT](https://www.waveshare.com/2-
 
 | # | Module       | Part / Model | Qty | Interface   | Source |
 |---|--------------|--------------|-----|-------------|--------|
-| 1 | SBC          | TBD          | 1   | —           | TBD    |
-| 2 | CAN HAT      | TBD          | 1   | SPI         | TBD    |
+| 1 | SBC          | Armsom Sige7 | 1   | —           | Armsom |
+| 2 | CAN HAT      | 2-CH CAN FD HAT | 4   | SPI         | Waveshare    |
 | 3 | Storage      | TBD          | 1   | PCIe / SATA | TBD    |
-| 4 | RTC          | TBD          | 1   | I2C         | TBD    |
+| 4 | RTC          | Integrated          | 1   | I2C         | TBD    |
 | 5 | GNSS         | TBD          | 1   | UART / USB  | TBD    |
 | 6 | Cellular     | TBD          | 1   | M.2 / USB   | TBD    |
 | 7 | Power        | TBD          | 1   | —           | TBD    |
