@@ -4,7 +4,7 @@
 
 | Parameter | Value |
 | :--- | :--- |
-| Length (front panel) | **220 mm** |
+| Length (front panel) | **230 mm** |
 | Depth | **100 mm** |
 | Height | **30 mm** |
 | Material | Aluminum (recommended) |
@@ -12,11 +12,11 @@
 
 The front panel runs along the **long side of the Sige7**, so all main connectors (USB, HDMI, Ethernet, CAN) face the same direction. The power input is on the rear panel.
 
-## 2. Top View (220 × 100 mm)
+## 2. Top View (230 × 100 mm)
 
 ```
 ┌────────────────────────────────────────────────────────────────────┐
-│  FRONT PANEL (220 mm)                                              │
+│  FRONT PANEL (230 mm)                                              │
 │                                                                    │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────────────────────┐ │
 │  │  STACK A     │  │  STACK B     │  │        Sige7              │ │
@@ -48,7 +48,7 @@ The front panel runs along the **long side of the Sige7**, so all main connector
 
 ## 3. Component Placement
 
-### 3.1. Front Panel (220 mm)
+### 3.1. Front Panel (230 mm)
 
 | Connector | Source | Purpose |
 | :--- | :--- | :--- |
@@ -84,22 +84,22 @@ The front panel runs along the **long side of the Sige7**, so all main connector
 
 ## 4. Dimensional Check
 
-### 4.1. Length (220 mm)
+### 4.1. Length (230 mm)
 
 | Element | Width (mm) |
 | :--- | :--- |
-| Stack A | 55 |
-| Stack B | 55 |
-| Sige7 | 85 |
-| **Total** | **195** |
-| Remaining clearance | **5** |
+| Stack A | 65 |
+| Stack B | 65 |
+| Sige7 | 92 |
+| **Total** | **222** |
+| Remaining clearance | **8** |
 
 ### 4.2. Depth (100 mm)
 
 | Element | Depth (mm) |
 | :--- | :--- |
-| Stack A / B | 55 |
-| Sige7 | 56 |
+| Stack A / B | 57 |
+| Sige7 | 62 |
 | Battery | 66 |
 | **Total (worst case)** | **66** |
 | Remaining clearance | **34** |
@@ -142,7 +142,7 @@ The front panel runs along the **long side of the Sige7**, so all main connector
 
 | Parameter | Value |
 | :--- | :--- |
-| Enclosure size | **220 × 100 × 30 mm** |
+| Enclosure size | **230 × 100 × 30 mm** |
 | Front panel | All main connectors (USB, HDMI, ETH, CAN) |
 | Rear panel | Power input (USB-C PD), GND, IGN, MAIN_PWR |
 | Shield stacks | 2 × (2 shields) in front |
