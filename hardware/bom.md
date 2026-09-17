@@ -116,7 +116,7 @@ Selected: [2-Channel Isolated CAN FD Expansion HAT](https://www.waveshare.com/2-
 
 **Purpose:** Reliable timekeeping without network.
 
-**Selected:** TBD
+**Selected:** On-board [LK8563S]()
 
 **Notes:**
 - Interface: I2C
