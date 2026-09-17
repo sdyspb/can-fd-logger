@@ -23,7 +23,7 @@ The adapter board routes signals cross-wise to ensure that each shield pair sees
 
 ## 3. Pin Assignment and Configuration
 
-Based on the provided schematic (J4) and the shield's "Stack Mode" documentation, the pin assignments are divided into two groups.
+Based on the provided [schematic (J4)](40-pin-sige7-spi.md) and the shield's "Stack Mode" documentation, the pin assignments are divided into two groups.
 
 ### 3.1. First Pair of Shields (Output A)
 
