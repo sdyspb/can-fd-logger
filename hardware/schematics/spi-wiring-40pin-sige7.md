@@ -140,3 +140,58 @@ By using a custom adapter board to map signals, it is possible to connect four d
 2. **Unique INT Lines:** Each shield must have a dedicated interrupt line.
 3. **Shared SPI Bus:** MOSI, MISO, and CLK are shared per SPI bus.
 4. **Correct DTS:** The Device Tree must define `cs-gpios` and `interrupts` for each of the 8 controllers.
+
+## 6. Connection Diagram
+
+```mermaid
+flowchart LR
+    subgraph SBC["ArmSom Sige7 (40-pin Header)"]
+        direction TB
+        SPI0["SPI0 Bus<br/>(MOSI / MISO / CLK)"]
+        SPI1["SPI1 Bus<br/>(MOSI / MISO / CLK)"]
+        GPIO_CS["GPIO CS Lines<br/>(Pin 13, 24)"]
+        GPIO_INT["GPIO INT Lines<br/>(Pin 14, 15, 26, 40)"]
+    end
+
+    subgraph ADAPTER["Adapter Board (Pin Mapper)"]
+        direction TB
+        MAP_A["Output A<br/>(Standard RPi Pinout)"]
+        MAP_B["Output B<br/>(Standard RPi Pinout)"]
+    end
+
+    subgraph PAIR_A["First Pair (Stack Mode)"]
+        direction TB
+        CAN0["CAN_0 Shield<br/>SPI0 + CE0 + D25"]
+        CAN1["CAN_1 Shield<br/>SPI1 + SPI1_CE1 + D23"]
+    end
+
+    subgraph PAIR_B["Second Pair (Stack Mode)"]
+        direction TB
+        CAN2["CAN_2 Shield<br/>SPI0 + CE1 + D13"]
+        CAN3["CAN_3 Shield<br/>SPI1 + SPI1_CE0 + D24"]
+    end
+
+    SPI0 -->|MOSI/MISO/CLK| MAP_A
+    SPI0 -->|MOSI/MISO/CLK| MAP_B
+    SPI1 -->|MOSI/MISO/CLK| MAP_A
+    SPI1 -->|MOSI/MISO/CLK| MAP_B
+
+    GPIO_CS -->|Pin 13 / Pin 11| MAP_A
+    GPIO_CS -->|Pin 24 / Pin 26| MAP_B
+
+    GPIO_INT -->|Pin 14 / Pin 15| MAP_A
+    GPIO_INT -->|Pin 26 / Pin 40| MAP_B
+
+    MAP_A --> CAN0
+    MAP_A --> CAN1
+    MAP_B --> CAN2
+    MAP_B --> CAN3
+
+    classDef sbc fill:#1f6feb,stroke:#0d419d,color:#fff
+    classDef adapter fill:#8957e5,stroke:#6e40c9,color:#fff
+    classDef shield fill:#2da44e,stroke:#1a7f37,color:#fff
+
+    class SPI0,SPI1,GPIO_CS,GPIO_INT sbc
+    class MAP_A,MAP_B adapter
+    class CAN0,CAN1,CAN2,CAN3 shield
+```
