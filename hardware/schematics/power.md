@@ -40,12 +40,16 @@ A **LiFePO4** cell is used as the backup energy storage. LiFePO4 chemistry was c
 
 ```mermaid
 flowchart LR
-    PD["USB Type-C PD Source<br/>12 V DC"] --> SBC["ArmSom Sige7<br/>(PD Controller)"]
+    PD["USB Type-C PD Source<br/>12 V DC"] --> ID1["Ideal Diode"]
+    ID1 --> SUM
+
     PD --> CHG["LiFePO4 Charger<br/>(CC/CV, 3.65 V max)"]
     CHG --> BATT["LiFePO4 Cell<br/>3.2 V / 10 Ah / 32 Wh"]
     BATT --> BOOST["Boost Converter<br/>3.2 V → 5 V / 12 V"]
-    BOOST --> SBC
-    BOOST --> SHIELDS["CAN FD Shields<br/>(VCC_3V3 / VCC_5V)"]
+    BOOST --> ID2["Ideal Diode"]
+    ID2 --> SUM
+    SUM --> SBC["ArmSom Sige7<br/>(PD Controller)"]
+    SUM --> SHIELDS["CAN FD Shields<br/>(VCC_3V3 / VCC_5V)"]
 
     classDef source fill:#1f6feb,stroke:#0d419d,color:#fff
     classDef storage fill:#2da44e,stroke:#1a7f37,color:#fff
