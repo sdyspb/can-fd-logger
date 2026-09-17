@@ -259,11 +259,3 @@ For the adapter board described in this document (connecting **four** shields), 
 
 > **Important:** Since the adapter board uses **software CS (GPIO)** for the second pair of shields, the `config settings` shown in the tables above (which use standard `dtoverlay` syntax) are provided **for reference only**. The actual Device Tree configuration for this project must be customized, using `cs-gpios` and explicit `interrupts` properties.
 
-### Reference Images
-
-Place the manufacturer's figures in the repository (e.g., under `docs/images/`) and reference them here:
-
-```markdown
-![Default Configuration (First Shield)](docs/images/shield_default.png)
-![Modified Configuration (Second Shield)](docs/images/shield_modified.png)
-```
