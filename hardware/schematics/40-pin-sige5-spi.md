@@ -3,7 +3,7 @@
 <img width="1434" height="719" alt="image" src="https://github.com/user-attachments/assets/ca39d058-0bdc-4a0b-8b8d-bd94b41f5e81" />
 
 ### SPI4
-| Pin | GPIO | Сигнал     |
+| Pin | GPIO | Name     |
 |-----|------|------------|
 | 19  |  1_B2   | SPI4_MOSI_M0   |
 | 21  | 1_B1    | SPI4_MISO_M0   |
