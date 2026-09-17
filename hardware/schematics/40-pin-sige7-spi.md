@@ -1,6 +1,6 @@
 # 40-pin Sige7 SPI interfaces
 
-<img width="1469" height="735" alt="image" src="https://github.com/user-attachments/assets/c6f10b80-0e9e-440d-957f-f029e7bc7cc3" />
+<img width="2653" height="1059" alt="image" src="https://github.com/user-attachments/assets/1ee9fb85-f34e-448c-a4c9-8f7e9db84f06" />
 
 ### SPI0
 | Pin | GPIO | Name     |
