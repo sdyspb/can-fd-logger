@@ -12,7 +12,7 @@
 
 The front panel runs along the **long side of the Sige7**, so all main connectors (USB, HDMI, Ethernet, CAN) face the same direction. The power input is on the rear panel.
 
-## 2. Top View (200 × 100 mm)
+## 2. Top View (220 × 100 mm)
 
 ```
 ┌────────────────────────────────────────────────────────────────────┐
