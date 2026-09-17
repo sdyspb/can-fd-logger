@@ -4,7 +4,7 @@
 
 | Parameter | Value |
 | :--- | :--- |
-| Length (front panel) | **200 mm** |
+| Length (front panel) | **220 mm** |
 | Depth | **100 mm** |
 | Height | **30 mm** |
 | Material | Aluminum (recommended) |
@@ -16,7 +16,7 @@ The front panel runs along the **long side of the Sige7**, so all main connector
 
 ```
 ┌────────────────────────────────────────────────────────────────────┐
-│  FRONT PANEL (200 mm)                                              │
+│  FRONT PANEL (220 mm)                                              │
 │                                                                    │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────────────────────┐ │
 │  │  STACK A     │  │  STACK B     │  │        Sige7              │ │
@@ -48,7 +48,7 @@ The front panel runs along the **long side of the Sige7**, so all main connector
 
 ## 3. Component Placement
 
-### 3.1. Front Panel (200 mm)
+### 3.1. Front Panel (220 mm)
 
 | Connector | Source | Purpose |
 | :--- | :--- | :--- |
@@ -84,7 +84,7 @@ The front panel runs along the **long side of the Sige7**, so all main connector
 
 ## 4. Dimensional Check
 
-### 4.1. Length (200 mm)
+### 4.1. Length (220 mm)
 
 | Element | Width (mm) |
 | :--- | :--- |
@@ -142,7 +142,7 @@ The front panel runs along the **long side of the Sige7**, so all main connector
 
 | Parameter | Value |
 | :--- | :--- |
-| Enclosure size | **200 × 100 × 30 mm** |
+| Enclosure size | **220 × 100 × 30 mm** |
 | Front panel | All main connectors (USB, HDMI, ETH, CAN) |
 | Rear panel | Power input (USB-C PD), GND, IGN, MAIN_PWR |
 | Shield stacks | 2 × (2 shields) in front |
