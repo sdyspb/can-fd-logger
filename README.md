@@ -16,6 +16,7 @@ debugging, and reverse engineering.
 - RTC
 - GNSS
 - 4G / 5G / LTE modem
+- Display
 - Power: 12 V automotive input with load-dump protection and UPS (internal or external)
 
 ## Repository layout
