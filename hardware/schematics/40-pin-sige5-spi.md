@@ -1,6 +1,4 @@
-# Sige5 40-pin SPI
-
-## 40-pin Sige5 SPI interfaces
+# 40-pin Sige5 SPI interfaces
 
 <img width="1434" height="719" alt="image" src="https://github.com/user-attachments/assets/ca39d058-0bdc-4a0b-8b8d-bd94b41f5e81" />
 
