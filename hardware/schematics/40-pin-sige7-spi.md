@@ -3,7 +3,7 @@
 <img width="1469" height="735" alt="image" src="https://github.com/user-attachments/assets/c6f10b80-0e9e-440d-957f-f029e7bc7cc3" />
 
 ### SPI0
-| Pin | GPIO | Сигнал     |
+| Pin | GPIO | Name     |
 |-----|------|------------|
 | 19  |  1_B2   | SPI0_MOSI_M2   |
 | 21  | 1_B1    | SPI0_MISO_M2   |
@@ -13,7 +13,7 @@
 
 ### SPI1
 
-| Pin | GPIO | Сигнал       |
+| Pin | GPIO | Name       |
 |-----|------|--------------|
 | 11  | 3-C1 | SPI1_CLK_M1  |
 | 13  | 3-C0 | SPI1_MOSI_M1         |
@@ -23,7 +23,7 @@
 
 ### SPI3
 
-| Pin | GPIO | Сигнал       |
+| Pin | GPIO | Name       |
 |-----|------|--------------|
 | 18  | 4-C4 | SPI3_MISO    |
 | 16  | 3-A4 | SPI4_CS1     |
