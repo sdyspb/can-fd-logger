@@ -13,6 +13,8 @@
 
 <img width="811" height="351" alt="image" src="https://github.com/user-attachments/assets/7838e563-fd78-4bc8-8d23-e993070c310e" />
 
+<img width="1682" height="237" alt="image" src="https://github.com/user-attachments/assets/2cebc46e-e6da-4290-9df1-469c945c9b31" />
+
 ### Перемычка
 
 На этапе отладки пины 8/10 используются как UART2. Чтобы сигнал `/IRQ` не мешал, ставится **переключающая перемычка**:
