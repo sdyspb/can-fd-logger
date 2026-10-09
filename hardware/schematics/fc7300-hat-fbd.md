@@ -69,3 +69,95 @@ graph LR
     MCU <==>|ALT0| JTAG_LINES
     MCU <===>|Dedicated / ALT0| SYS_CTRL
 ```
+
+# Mermaid-диаграмма физического расположения интерфейсов вокруг контроллера
+
+Ниже представлена переработанная архитектурная диаграмма, где все внешние устройства и порты отладки симметрично распределены вокруг центрального процессора **FC7300F8MDT** без указания направления сигналов. Такая структура улучшает визуальное восприятие и упрощает планирование трассировки платы.
+
+```mermaid
+graph TD
+    %% Стилизация компонентов
+    classDef mcu fill:#1a365d,stroke:#0f172a,stroke-width:3px,color:#ffffff;
+    classDef can fill:#d97706,stroke:#7c2d12,stroke-width:1px,color:#ffffff;
+    classDef eth fill:#059669,stroke:#064e3b,stroke-width:1px,color:#ffffff;
+    classDef debug fill:#dc2626,stroke:#7f1d1d,stroke-width:1px,color:#ffffff;
+    classDef peri fill:#4f46e5,stroke:#1e1b4b,stroke-width:1px,color:#ffffff;
+
+    %% -------------------------------------------------------------
+    %% ВЕРХНИЙ СЕКТОР: СЕТЕВЫЕ ИНТЕРФЕЙСЫ
+    %% -------------------------------------------------------------
+    subgraph Top_Sector [ВЕРХНИЙ СЕКТОР: Gigabit Ethernet]
+        RGMII_TX[RGMII TX Линии<br>PTC2, PTD7, PTD6, PTD5<br>TX_EN: PTD12, TX_CLK: PTD11]:::eth
+        SMI_MGMT[SMI Управление PHY<br>MDC: PTE8<br>MDIO: PTB4]:::eth
+        RGMII_RX[RGMII RX Линии<br>PTC1, PTC0, PTD9, PTB23<br>RX_DV: PTD8, RX_CLK: PTD10]:::eth
+    end
+
+    %% -------------------------------------------------------------
+    %% ЛЕВЫЙ СЕКТОР: ИНТЕРФЕЙСЫ CANFD (0 - 3)
+    %% -------------------------------------------------------------
+    subgraph Left_Sector [ЛЕВЫЙ СЕКТОР: Шины CANFD 0-3]
+        CAN_W[CAN0 Wakeup<br>PTE21 / PTE22]:::can
+        CAN1[CAN1FD<br>PTA11 / PTA12]:::can
+        CAN2[CAN2FD<br>PTD16 / PTD15]:::can
+        CAN3[CAN3FD<br>PTA31 / PTB18]:::can
+    end
+
+    %% -------------------------------------------------------------
+    %% ЦЕНТР: МИКРОКОНТРОЛЛЕР
+    %% -------------------------------------------------------------
+    MCU[« ЦЕНТР ПЛАТЫ »<br><br>Flagchip Semiconductor<br>FC7300F8MDT<br>Корпус BGA320]:::mcu
+
+    %% -------------------------------------------------------------
+    %% ПРАВЫЙ СЕКТОР: ИНТЕРФЕЙСЫ CANFD (4 - 7)
+    %% -------------------------------------------------------------
+    subgraph Right_Sector [ПРАВЫЙ СЕКТОР: Шины CANFD 4-7]
+        CAN4[CAN4FD<br>PTC8 / PTB17]:::can
+        CAN5[CAN5FD<br>PTC13 / PTC12]:::can
+        CAN6[CAN6FD<br>PTC19 / PTC24]:::can
+        CAN7[CAN7FD<br>PTD25 / PTB10]:::can
+    end
+
+    %% -------------------------------------------------------------
+    %% НИЖНИЙ СЕКТОР: ОТЛАДКА И ПЕРИФЕРИЯ ПЛАТЫ
+    %% -------------------------------------------------------------
+    subgraph Bottom_Sector [НИЖНИЙ СЕКТОР: Память, Консоль и Отладка]
+        SPI_FLASH[NOR Flash SPI2<br>L3: PTE11 CS<br>L2: PTE10 MISO<br>M1: PTE13 CLK<br>M2: PTA25 MOSI]:::peri
+        I2C_EEPROM[EEPROM I2C1<br>V4: PTB5 SDA<br>V5: PTB30 SCL]:::peri
+        UART_CONS[Консоль UART1<br>D2: PTA18 TX<br>D3: PTA19 RX]:::peri
+        DEBUG_PORT[Порт JTAG / SWD<br>E7: PTC4 CLK<br>B4: PTA4 DIO<br>C6: PTC5 TDI<br>F8: PTA10 TDO]:::debug
+        SYS_CTRL[Линии управления<br>B5: RESET_b<br>H16: PTD21 ISP_EN_B]:::debug
+    end
+
+    %% -------------------------------------------------------------
+    %% БЕЗНАПРАВЛЕННЫЕ СВЯЗИ (ФИЗИЧЕСКОЕ РАСПОЛОЖЕНИЕ)
+    %% -------------------------------------------------------------
+    %% Верхний сектор
+    MCU --- RGMII_TX
+    MCU --- SMI_MGMT
+    MCU --- RGMII_RX
+
+    %% Левый сектор
+    MCU --- CAN_W
+    MCU --- CAN1
+    MCU --- CAN2
+    MCU --- CAN3
+
+    %% Правый сектор
+    MCU --- CAN4
+    MCU --- CAN5
+    MCU --- CAN6
+    MCU --- CAN7
+
+    %% Нижний сектор
+    MCU --- SPI_FLASH
+    MCU --- I2C_EEPROM
+    MCU --- UART_CONS
+    MCU --- DEBUG_PORT
+    MCU --- SYS_CTRL
+```
+
+> ⚠️ **Предупреждение:** Данное пространственное размещение блоков на диаграмме является условным ориентиром для проектирования трассировки. Компоненты группы `Top_Sector` (Gigabit Ethernet) требуют максимально коротких проводников и должны размещаться на плате в непосредственной близости от выводов верхних рядов BGA-матрицы микроконтроллера для минимизации затухания сигналов частотой 125 МГц.
+
+<FollowUp>
+Визуальная схема подключений полностью готова. Требуется ли вам перейти к **составлению карты распределения памяти ОЗУ (Message Buffers)** для бесконфликтной одновременной работы всех 8 выбранных каналов CANFD в коде, или структура выводов для шилда окончательно утверждена?
+</FollowUp>
