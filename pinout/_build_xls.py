@@ -145,7 +145,7 @@ def assign_side(rows):
     for i, r in enumerate(rows):
         r['side'] = 'LEFT' if i < half else 'RIGHT'
 
-for blk in (ground, power, gpio, control):
+for blk in (ground, power, control):
     assign_side(blk)
     half = len(blk) // 2
     print(blk[0]['name'] if blk else '-', len(blk), 'LEFT:',
@@ -190,7 +190,7 @@ for p in gpio:
 # RESET_B is a dedicated pin — plain name, no mux functions
 for p in reset:
     p['out'] = 'RESET_B'
-    p['side'] = 'Right'
+    p['side'] = 'RIGHT'
     p['type'] = 'INPUT'
 
 gpio = sorted(gpio, key=sort_key)
@@ -198,7 +198,8 @@ gpio = sorted(gpio, key=sort_key)
 def side_of(p):
     if p in ground or p in power:
         return p['side']
-    return 'Right'
+    # GPIO: pins with several mux functions go LEFT (rule), otherwise RIGHT
+    return 'LEFT' if p['out'].count('/') >= 1 else 'RIGHT'
 
 # ---- write .xlsx (format per fx3.xlsx reference) ---------------------------
 def write_book(path, ball_key, group=False):
@@ -223,15 +224,15 @@ def write_book(path, ball_key, group=False):
     if group:
         sheets = [(n, (it + extra_vss) if n == 'GND' else it)
                   for n, it in sheets]
-        # PWR/GND: drop shared-net rows that have no real BGA coordinate
-        # (V1.3 main table lists 10 VDD_HV_A rows but BGA_mapping has only 6
-        #  real balls — the extra rows are a datasheet inconsistency),
-        # then group by base name: groups keep first-appearance order,
+        # PWR/GND: group by base name: groups keep first-appearance order,
         # pins inside a group go by suffix number
-        for idx in (1, 2):
-            items = [p for p in sheets[idx][1]
-                     if not (not p.get('ball') and p['name'] in
-                             ('VSS', 'VDD_HV_A', 'VDD_HV_B'))]
+        for sheet_name, _ in sheets:
+            if sheet_name not in ('PWR', 'GND'):
+                continue
+            idx = [n for n, _ in sheets].index(sheet_name)
+            # rule 2: drop shared-net rows with no real BGA coordinate
+            # (datasheet inconsistency, e.g. extra VDD_HV_A rows)
+            items = [p for p in sheets[idx][1] if p.get('ball')]
             def base_of(name):
                 m = re.match(r'^(.*?)_(\d+)$', name)
                 return (m.group(1), int(m.group(2))) if m else (name, 0)
@@ -242,7 +243,7 @@ def write_book(path, ball_key, group=False):
             def sort_key(p):
                 b, n = base_of(p['out'])
                 return (first_seen[b], b, n)
-            sheets[idx] = (sheets[idx][0], sorted(items, key=sort_key))
+            sheets[idx] = (sheet_name, sorted(items, key=sort_key))
     for sheet_name, items in sheets:
         sh = wb2.create_sheet(sheet_name)
         for r, p in enumerate(items, start=1):
