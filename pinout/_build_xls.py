@@ -19,6 +19,13 @@ for row in ws.iter_rows(min_row=2, values_only=True):
     ptype = str(row[4]).strip() if row[4] is not None else ''
     if not bga and not lqfp:
         continue
+    if name == 'RESET_b':
+        # dedicated reset pin: not in BGA_mapping (no ball coordinate),
+        # BGA ball B5 is taken from the main table
+        pins.append({'lqfp': lqfp, 'bga': bga, 'name': 'RESET_B',
+                     'domain': domain, 'type': ptype,
+                     'default': 'RESET_B', 'alts': []})
+        continue
     pins.append({'lqfp': lqfp, 'bga': bga, 'name': name,
                  'domain': domain, 'type': ptype,
                  'default': (str(row[5]).strip() if row[5] is not None else ''),
@@ -89,15 +96,18 @@ def block_of(p):
             or n.startswith('V11_') or n.startswith('V15_') or n.startswith('V25') \
             or n in ('VDD_HV_A', 'VDD_HV_B', 'V15_CFG', 'V15_BASE_DRIVER'):
         return 'Power'
-    if n in ('RESET_B', 'OSC32K_XTAL'):
+    if n == 'OSC32K_XTAL':
         return 'Control'
-    if re.fullmatch(r'PT[A-E]\d+', n):
+    if re.fullmatch(r'PT[A-T]\d+', n) or n == 'RESET_B':
         return 'GPIO'
     return 'Other'
 
 ground = [p for p in pins if block_of(p) == 'Ground']
 power = [p for p in pins if block_of(p) == 'Power']
 gpio = [p for p in pins if block_of(p) == 'GPIO']
+# RESET_B (dedicated pin) goes to the PTA bank, appended at the end
+reset = [p for p in gpio if p['name'] == 'RESET_B']
+gpio = [p for p in gpio if p['name'] != 'RESET_B']
 control = [p for p in pins if block_of(p) == 'Control']
 other = [p for p in pins if block_of(p) == 'Other']
 print(f'total {len(pins)} | ground {len(ground)} | power {len(power)} | gpio {len(gpio)} | control {len(control)} | other {len(other)}')
@@ -148,6 +158,8 @@ def type_of(p):
     n = p['name']
     if n.startswith('VSS'):
         return 'GND'
+    if n == 'RESET_B':
+        return 'INPUT'
     if not re.fullmatch(r'PT[A-T]\d+', n):
         return 'PWR'
     return 'BIDIR'
@@ -165,6 +177,12 @@ for p in gpio:
             fns.append(fn)
     p['out'] = '/'.join(fns)
 
+# RESET_B is a dedicated pin — plain name, no mux functions
+for p in reset:
+    p['out'] = 'RESET_B'
+    p['side'] = 'Right'
+    p['type'] = 'INPUT'
+
 gpio = sorted(gpio, key=sort_key)
 
 def side_of(p):
@@ -176,7 +194,15 @@ def side_of(p):
 def write_book(path, ball_key, group=False):
     wb2 = openpyxl.Workbook()
     wb2.remove(wb2.active)
-    sheets = [('GPIO', gpio), ('PWR', power), ('GND', ground)]
+    # GPIO split into one sheet per port bank: PTA..PTI
+    banks = [b for b in 'ABCDEFGHI'
+             if any(p['name'].startswith(f'PT{b}') for p in gpio)]
+    sheets = [(f'PT{b}', [p for p in gpio if p['name'].startswith(f'PT{b}')])
+              for b in banks]
+    # RESET_B appended to the PTA sheet (JTAG bank)
+    if reset:
+        sheets = [(n, (it + reset) if n == 'PTA' else it) for n, it in sheets]
+    sheets += [('PWR', power), ('GND', ground)]
     if group:
         # PWR/GND: drop shared-net rows that have no real BGA coordinate
         # (V1.3 main table lists 10 VDD_HV_A rows but BGA_mapping has only 6
