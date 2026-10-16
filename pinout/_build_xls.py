@@ -68,6 +68,10 @@ print('HV_B balls:', len(HV_B_BALLS), HV_B_BALLS)
 # real VDD_HV_A balls. The datasheet is ambiguous here — the 4 extra LQFP
 # positions (110/126/141/151) are kept with the 'VDD_HV_A' marker, their real
 # coordinates are unknown from this file.
+# NOTE (rule "Parsing repeated nets" p.3): the V1.3 main table lists 14 VSS
+# rows, but BGA_mapping has 44 VSS balls. All 44 real VSS balls must be listed
+# as their own rows (VSS_1 .. VSS_44), so we take the FULL VSS pool instead of
+# only the 14 rows the main table names.
 vss_pool = list(VSS_BALLS)
 hva_pool = list(HV_A_BALLS)
 hvb_pool = list(HV_B_BALLS)
@@ -83,9 +87,15 @@ for p in pins:
         p['ball'] = hvb_pool.pop(0)
     else:
         p['ball'] = p['bga']
-assert not hvb_pool and len(vss_pool) >= 29, (vss_pool, hvb_pool)
-print('VSS balls used:', len(VSS_BALLS) - len(vss_pool), 'of', len(VSS_BALLS),
-      '(table lists 14 VSS rows, BGA has 44 VSS balls)')
+# The V1.3 main table names only 14 VSS rows, but BGA_mapping has 44 VSS balls.
+# Rule "Parsing repeated nets" p.3: list every real ball of the net as its own
+# row — synthesize the extra VSS rows from the remaining pool balls.
+while vss_pool:
+    b = vss_pool.pop(0)
+    pins.append({'lqfp': '', 'bga': b, 'ball': b, 'name': 'VSS',
+                 'domain': 'PD0', 'type': 'GND', 'default': 'VSS', 'alts': []})
+assert not hvb_pool and not vss_pool, (vss_pool, hvb_pool)
+print('VSS balls used: all', len(VSS_BALLS), '(BGA has 44 VSS balls, all listed)')
 print('VDD_HV_A resolved:', len(HV_A_BALLS), '| unresolved LQFP:', hva_unresolved)
 
 def block_of(p):
@@ -202,8 +212,17 @@ def write_book(path, ball_key, group=False):
     # RESET_B appended to the PTA sheet (JTAG bank)
     if reset:
         sheets = [(n, (it + reset) if n == 'PTA' else it) for n, it in sheets]
+    # Extra VSS rows (synthesized above from the remaining VSS balls): the V1.3
+    # main table names 14 VSS rows but BGA_mapping has 44. Rule "Parsing
+    # repeated nets" p.3 lists every real ball, so append them after the table
+    # rows. The 14 table rows carry ball == 'VSS' (the net-name column); the
+    # synthesized rows carry a real coordinate — select the latter.
+    extra_vss = [p for p in pins
+                 if p['name'] == 'VSS' and p['ball'] not in VSS_BALLS]
     sheets += [('PWR', power), ('GND', ground)]
     if group:
+        sheets = [(n, (it + extra_vss) if n == 'GND' else it)
+                  for n, it in sheets]
         # PWR/GND: drop shared-net rows that have no real BGA coordinate
         # (V1.3 main table lists 10 VDD_HV_A rows but BGA_mapping has only 6
         #  real balls — the extra rows are a datasheet inconsistency),
@@ -211,7 +230,7 @@ def write_book(path, ball_key, group=False):
         # pins inside a group go by suffix number
         for idx in (1, 2):
             items = [p for p in sheets[idx][1]
-                     if not (not p['ball'] and p['name'] in
+                     if not (not p.get('ball') and p['name'] in
                              ('VSS', 'VDD_HV_A', 'VDD_HV_B'))]
             def base_of(name):
                 m = re.match(r'^(.*?)_(\d+)$', name)
@@ -228,7 +247,7 @@ def write_book(path, ball_key, group=False):
         sh = wb2.create_sheet(sheet_name)
         for r, p in enumerate(items, start=1):
             sh.cell(row=r, column=1, value=p['out'])
-            sh.cell(row=r, column=2, value=p[ball_key])
+            sh.cell(row=r, column=2, value=p[ball_key] if ball_key in p else p['bga'])
             sh.cell(row=r, column=3, value=type_of(p))
             sh.cell(row=r, column=4, value=side_of(p))
             if p['lqfp']:
@@ -250,4 +269,17 @@ for path in (DSTA1,):
         print('  ===', sheet)
         for row in list(sh.iter_rows(values_only=True))[:8]:
             print('   ', [str(c) if c is not None else '' for c in row])
+
+# rule "Parsing repeated nets" p.4: every Ball matches [A-Z][1-9][0-9]?
+# and all balls across all sheets are unique
+all_balls = []
+for s in b2.worksheets:
+    for row in s.iter_rows(values_only=True):
+        if row[1]:
+            all_balls.append((s.title, str(row[1])))
+bad = [b for _, b in all_balls if not re.fullmatch(r'[A-Z][1-9][0-9]?', b)]
+dup = {b for _, b in all_balls if sum(1 for x, y in all_balls if y == b) > 1}
+assert not bad, ('bad ball cells', bad)
+assert not dup, ('duplicate balls', sorted(dup))
+print('ball check OK:', len(all_balls), 'cells, all match [A-Z][1-9][0-9]? and unique')
 
