@@ -36,6 +36,51 @@ for row in bm.iter_rows(min_row=2, max_row=21, values_only=True):
         if val:
             ball2name[f'{rowlabel}{col}'] = val
 
+# balls of a given net, in BGA_mapping grid order (row by row)
+def balls_of(net):
+    out = []
+    for row in bm.iter_rows(min_row=2, max_row=21, values_only=True):
+        rowlabel = str(row[0]).strip() if row[0] else ''
+        if not re.fullmatch(r'[A-Z]', rowlabel):
+            continue
+        for col, cell in enumerate(row[1:21], start=1):
+            val = str(cell).strip() if cell is not None else ''
+            if val == net:
+                out.append(f'{rowlabel}{col}')
+    return out
+
+VSS_BALLS = balls_of('VSS')
+HV_A_BALLS = balls_of('VDD_HV_A')
+HV_B_BALLS = balls_of('VDD_HV_B')
+print('VSS balls:', len(VSS_BALLS), VSS_BALLS)
+print('HV_A balls:', len(HV_A_BALLS), HV_A_BALLS)
+print('HV_B balls:', len(HV_B_BALLS), HV_B_BALLS)
+
+# ---- shared ball pools (in order of appearance in the main table) ----------
+# NOTE: the V1.3 main table lists 10 VDD_HV_A pins, but BGA_mapping has only 6
+# real VDD_HV_A balls. The datasheet is ambiguous here — the 4 extra LQFP
+# positions (110/126/141/151) are kept with the 'VDD_HV_A' marker, their real
+# coordinates are unknown from this file.
+vss_pool = list(VSS_BALLS)
+hva_pool = list(HV_A_BALLS)
+hvb_pool = list(HV_B_BALLS)
+hva_unresolved = []
+for p in pins:
+    if p['name'] == 'VSS':
+        p['ball'] = vss_pool.pop(0)
+    elif p['name'] == 'VDD_HV_A':
+        p['ball'] = hva_pool.pop(0) if hva_pool else ''
+        if not p['ball']:
+            hva_unresolved.append(p['lqfp'])
+    elif p['name'] == 'VDD_HV_B':
+        p['ball'] = hvb_pool.pop(0)
+    else:
+        p['ball'] = p['bga']
+assert not hvb_pool and len(vss_pool) >= 29, (vss_pool, hvb_pool)
+print('VSS balls used:', len(VSS_BALLS) - len(vss_pool), 'of', len(VSS_BALLS),
+      '(table lists 14 VSS rows, BGA has 44 VSS balls)')
+print('VDD_HV_A resolved:', len(HV_A_BALLS), '| unresolved LQFP:', hva_unresolved)
+
 def block_of(p):
     n = p['name']
     if n.startswith('VSS'):
@@ -127,23 +172,55 @@ def side_of(p):
     return 'Right'
 
 # ---- write .xlsx (format per fx3.xlsx reference) ---------------------------
-wb2 = openpyxl.Workbook()
-wb2.remove(wb2.active)
-DSTX = DST.replace('.xls', '.xlsx')
-for sheet_name, items in [('GPIO', gpio), ('PWR', power), ('GND', ground)]:
-    sh = wb2.create_sheet(sheet_name)
-    for r, p in enumerate(items, start=1):
-        sh.cell(row=r, column=1, value=p['out'])
-        sh.cell(row=r, column=2, value=p['bga'])
-        sh.cell(row=r, column=3, value=type_of(p))
-        sh.cell(row=r, column=4, value=side_of(p))
-        if p['lqfp']:
-            sh.cell(row=r, column=5, value=p['lqfp'])
-wb2.save(DSTX)
-print('WROTE:', DSTX)
+def write_book(path, ball_key, group=False):
+    wb2 = openpyxl.Workbook()
+    wb2.remove(wb2.active)
+    sheets = [('GPIO', gpio), ('PWR', power), ('GND', ground)]
+    if group:
+        # PWR/GND: drop shared-net rows that have no real BGA coordinate
+        # (V1.3 main table lists 10 VDD_HV_A rows but BGA_mapping has only 6
+        #  real balls — the extra rows are a datasheet inconsistency),
+        # then group by base name: groups keep first-appearance order,
+        # pins inside a group go by suffix number
+        for idx in (1, 2):
+            items = [p for p in sheets[idx][1]
+                     if not (not p['ball'] and p['name'] in
+                             ('VSS', 'VDD_HV_A', 'VDD_HV_B'))]
+            def base_of(name):
+                m = re.match(r'^(.*?)_(\d+)$', name)
+                return (m.group(1), int(m.group(2))) if m else (name, 0)
+            first_seen = {}
+            for i, p in enumerate(items):
+                b = base_of(p['out'])[0]
+                first_seen.setdefault(b, i)
+            def sort_key(p):
+                b, n = base_of(p['out'])
+                return (first_seen[b], b, n)
+            sheets[idx] = (sheets[idx][0], sorted(items, key=sort_key))
+    for sheet_name, items in sheets:
+        sh = wb2.create_sheet(sheet_name)
+        for r, p in enumerate(items, start=1):
+            sh.cell(row=r, column=1, value=p['out'])
+            sh.cell(row=r, column=2, value=p[ball_key])
+            sh.cell(row=r, column=3, value=type_of(p))
+            sh.cell(row=r, column=4, value=side_of(p))
+            if p['lqfp']:
+                sh.cell(row=r, column=5, value=p['lqfp'])
+    wb2.save(path)
+    print('WROTE:', path)
+
+# original file fc7300-320-pin.xlsx is kept as-is (ball column with 'VSS' etc.);
+# it is often open in Excel, so only the -a1 file is (re)generated here.
+DSTA1 = r'D:\work\!myprojects\canfd-logger-fc7300\pinout\fc7300-320-pin-a1.xlsx'
+write_book(DSTA1, 'ball', group=True)
 
 # verification
-b2 = openpyxl.load_workbook(DSTX)
-for s in b2.worksheets:
-    print(s.title, s.max_row, 'rows,', s.max_column, 'cols')
+for path in (DSTA1,):
+    b2 = openpyxl.load_workbook(path)
+    print(path.split('\\')[-1], [(s.title, s.max_row) for s in b2.worksheets])
+    for sheet in ('GND', 'PWR'):
+        sh = [s for s in b2.worksheets if s.title == sheet][0]
+        print('  ===', sheet)
+        for row in list(sh.iter_rows(values_only=True))[:8]:
+            print('   ', [str(c) if c is not None else '' for c in row])
 
