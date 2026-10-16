@@ -158,10 +158,11 @@ def sort_key(p):
     return (bank, int(p['name'][3:]), p['lqfp'] or '999')
 
 for p in gpio:
-    fns = [p['default']]
-    for alt in p['alts']:
-        if alt and alt not in fns:
-            fns.append(alt)
+    # pin name first, then all mux functions (DEFAULT, ALT0...) in table order
+    fns = [p['name']]
+    for fn in [p['default']] + list(p['alts']):
+        if fn and fn not in fns:
+            fns.append(fn)
     p['out'] = '/'.join(fns)
 
 gpio = sorted(gpio, key=sort_key)
