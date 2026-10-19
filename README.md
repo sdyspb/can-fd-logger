@@ -32,13 +32,9 @@ can-logger/
 ├── hardware/
 │   ├── README.md              # selected boards, modules, links
 │   ├── bom.md                 # bill of materials
-│   ├── schematics/            # module, shield and custom board schematics
-│   ├── pdf/                   # reference PDFs (SBC, demo boards, transceivers)
-│   └── custom/                # custom boards (kicad + gerbers)
-│
-├── pinout/
-│   ├── FC7300F8MDT Pinout_V1.3.xlsx   # vendor mux/pinout table
-│   └── fc7300-320-pin-a1.xlsx         # per-bank pinout sheets (GND/PWR/PTA…PTI)
+│   ├── schematics/            # FC7300 HAT, SBC, power and wake-up
+│   ├── pinout/                # FC7300 BGA320 pinout (vendor mux + per-bank sheets)
+│   └── pdf/                   # reference PDFs (SBC boards, demo boards, transceivers)
 │
 ├── firmware/
 │   ├── overlays/              # device tree overlays (can, nvme, rtc, gnss)

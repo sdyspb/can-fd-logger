@@ -4,8 +4,8 @@ import re
 from collections import Counter
 import openpyxl
 
-SRC = r'D:\work\!myprojects\canfd-logger-fc7300\pinout\FC7300F8MDT Pinout_V1.3.xlsx'
-DST = r'D:\work\!myprojects\canfd-logger-fc7300\pinout\fc7300-320-pin.xlsx'
+SRC = r'D:\work\!myprojects\canfd-logger-fc7300\hardware\pinout\FC7300F8MDT Pinout_V1.3.xlsx'
+DST = r'D:\work\!myprojects\canfd-logger-fc7300\hardware\pinout\fc7300-320-pin.xlsx'
 
 wb = openpyxl.load_workbook(SRC, data_only=True)
 ws = wb['Pinout_FC7300F8MDT']
@@ -258,7 +258,7 @@ def write_book(path, ball_key, group=False):
 
 # original file fc7300-320-pin.xlsx is kept as-is (ball column with 'VSS' etc.);
 # it is often open in Excel, so only the -a1 file is (re)generated here.
-DSTA1 = r'D:\work\!myprojects\canfd-logger-fc7300\pinout\fc7300-320-pin-a1.xlsx'
+DSTA1 = r'D:\work\!myprojects\canfd-logger-fc7300\hardware\pinout\fc7300-320-pin-a1.xlsx'
 write_book(DSTA1, 'ball', group=True)
 
 # verification

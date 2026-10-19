@@ -1,6 +1,6 @@
 import openpyxl
 
-path = r'D:\work\!myprojects\canfd-logger-fc7300\pinout\FC7300F8MDT Pinout_V1.3.xlsx'
+path = r'D:\work\!myprojects\canfd-logger-fc7300\hardware\pinout\FC7300F8MDT Pinout_V1.3.xlsx'
 wb = openpyxl.load_workbook(path, data_only=True)
 print('SHEETS:', wb.sheetnames)
 for name in wb.sheetnames:

@@ -8,11 +8,11 @@ Hardware design files, component selection, and assembly references for the CAN 
 |------------------|--------------------------------------------------|
 | `bom.md`         | Bill of materials with part numbers and sources  |
 | `schematics/`    | Schematics and wiring for the FC7300 HAT, SBC, power and wake-up |
+| `pinout/`        | FC7300 BGA320 pinout tables (vendor mux sheet + per-bank sheets) |
 | `pdf/`           | Reference PDFs (SBC boards, FC7300 demo boards, transceivers) |
-| `custom/`        | Custom board designs (cad sources + gerbers)   |
 
-The FC7300 pinout tables (vendor mux sheet + per-bank BGA320 sheets) live in the
-top-level [`../pinout/`](../pinout) directory.
+The FC7300 pinout tables (vendor mux sheet + per-bank BGA320 sheets) live in
+[`pinout/`](pinout).
 
 ## Modules
 
@@ -31,4 +31,3 @@ top-level [`../pinout/`](../pinout) directory.
 
 - Reference schematics and board PDFs are stored under `pdf/`.
 - The FC7300 CAN FD HAT provides 8 channels: 1 wake-up (`FLEXCAN0`) + 7 standard, plus 1000Base-T1 Ethernet (RGMII).
-- Custom board designs live under `custom/` with gerbers ready for fabrication.
