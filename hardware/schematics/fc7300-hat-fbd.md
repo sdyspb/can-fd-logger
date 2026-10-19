@@ -73,4 +73,3 @@ graph LR
     MCU --- SYS_CTRL
 ```
 
-</FollowUp>

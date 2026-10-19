@@ -10,14 +10,17 @@ debugging, and reverse engineering.
 
 ## Hardware
 
-- SBC: ARM64 or RISC-V compatible
-- CAN interface: 7-CH CAN FD HAT modules with galvanic isolation
+- Compute (SBC): [ArmSom Sige7](https://docs.armsom.org/armsom-sige7) — Rockchip RK3588 (ARM64), 8 GB RAM, 2× 2.5 GbE, 40-pin expansion header
+- CAN interface: custom **FC7300 CAN FD HAT** around the Flagchip **FC7300F8MDT** (BGA320) — 8 CAN FD channels (1 wake-up + 7 standard), 1000Base-T1 Ethernet, galvanic isolation
+- System controller: always-on **RP2040** MCU for power sequencing, ignition monitoring and battery management
 - Storage: eMMC and single M.2 NVME / M.2 SATA or RAID-10 array for data reliability
 - RTC
 - GNSS
 - 4G / 5G / LTE modem
 - Display
-- Power: 12 V automotive input with load-dump protection and UPS (internal or external)
+- Power: 12 V automotive input with load-dump protection and a LiFePO4 backup battery (UPS, internal or external)
+
+> Hardware details, pinouts, schematics and the bill of materials live in [`hardware/`](hardware/README.md).
 
 ## Repository layout
 
@@ -30,7 +33,12 @@ can-logger/
 │   ├── README.md              # selected boards, modules, links
 │   ├── bom.md                 # bill of materials
 │   ├── schematics/            # module, shield and custom board schematics
+│   ├── pdf/                   # reference PDFs (SBC, demo boards, transceivers)
 │   └── custom/                # custom boards (kicad + gerbers)
+│
+├── pinout/
+│   ├── FC7300F8MDT Pinout_V1.3.xlsx   # vendor mux/pinout table
+│   └── fc7300-320-pin-a1.xlsx         # per-bank pinout sheets (GND/PWR/PTA…PTI)
 │
 ├── firmware/
 │   ├── overlays/              # device tree overlays (can, nvme, rtc, gnss)
