@@ -66,6 +66,54 @@ flowchart LR
     class ID1,ID2 diode
 ```
 
+### FC7300 Shield Power Path
+
+The FC7300 CAN FD shield (8-CH) is powered by three on-board regulators fed directly from the
+12 V automotive source (KL30 / KL15). 12 V is also routed **directly** to the CAN transceivers
+`VBAT` (no regulator in between — keeps wake-up alive in any SBC sleep state).
+
+| Rail | Regulator | Load on shield |
+| :--- | :--- | :--- |
+| **5 V / 3 A** | Buck (12 V → 5 V) | CAN transceivers (IO), RGB LED |
+| **3.3 V / 3 A** | Buck (12 V → 3.3 V) | 1000Base-T1 Ethernet PHY, uC, NOR Flash and remaining peripheral |
+| **1.6 V / 3 A** | Low-noise LDO / Buck (3.3 V or 12 V → 1.6 V) | FC7300F8MDT core (`uC`) |
+
+```mermaid
+flowchart LR
+    MAIN["12 V (KL30 / KL15)"] --> REG5["Buck 12V → 5V / 3A"]
+    MAIN --> REG33["Buck 12V → 3.3V / 3A"]
+    MAIN --> REGLDO["Buck/LDO → 1.6V / 3A"]
+
+    REG5 --> CAN["CAN transceivers<br/>(IO)"]
+    REG5 --> RGB["RGB LED"]
+
+    REG33 --> ETH["1000Base-T1<br/>Ethernet PHY"]
+    REG33 --> FLASH["NOR Flash"]
+    REG33 --> PERI["Other<br/>peripheral"]
+
+    REGLDO --> UC["FC7300F8MDT<br/>(uC core)"]
+
+    MAIN -.->|direct, no regulator| VBAT["CAN VBAT<br/>(wake-up)"]
+
+    classDef source fill:#1f6feb,stroke:#0d419d,color:#fff
+    classDef conv fill:#8957e5,stroke:#6e40c9,color:#fff
+    classDef load fill:#bf8700,stroke:#9a6700,color:#fff
+    classDef vbat fill:#2da44e,stroke:#1a7f37,color:#fff
+
+    class MAIN source
+    class REG5,REG33,REGLDO conv
+    class CAN,RGB,ETH,FLASH,PERI,UC load
+    class VBAT vbat
+```
+
+> **Notes**
+> - The 1.6 V rail is the **core supply** of FC7300F8MDT (VDD_HV_A / VDD_CORE domain on the BGA320).
+>   Keep it low-noise; route the sense lines directly to the uC pins.
+> - The 5 V rail powers only the **I/O side** of the CAN transceivers (and the RGB LED); the
+>   transceivers' VBAT pin is wired to 12 V so that wake-up on the CAN bus remains available
+>   even when the uC is in deep sleep.
+> - The three regulators are independent — a fault on one rail does not pull the others down.
+
 ### Design Considerations
 
 1. **Charging the LiFePO4 cell**
