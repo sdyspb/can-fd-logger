@@ -1,5 +1,25 @@
 # Содержимое директории
 
+Директория хранит справочную документацию (PDF/JPG) по ключевым компонентам системы.
+
+## Карта файлов
+
+| Файл | Компонент | Описание | Даташит / ссылка |
+|---|---|---|---|
+| [`sbc/ArmSoM-Sige7_1V1_20231218 Sch.pdf`](sbc/ArmSoM-Sige7_1V1_20231218%20Sch.pdf) | ArmSoM **Sige7** (RK3588) | Схема платы SBC v1.1 | [ArmSoM Sige7 — docs](https://docs.armsom.org/armsom-sige7) |
+| [`sbc/armsom-sige5-1v3_Sch.pdf`](sbc/armsom-sige5-1v3_Sch.pdf) | ArmSoM **Sige5** (RK3588) | Схема платы SBC v1.3 (reference) | [ArmSoM Sige5 — docs](https://docs.armsom.org/armsom-sige5) |
+| [`fc7300/FC7300_Demo_V1.0_Schematic_YT.pdf`](fc7300/FC7300_Demo_V1.0_Schematic_YT.pdf) | FC7300 Demo Board V1.0 | Схема демо-платы с 1000Base-T1 PHY YT8011A / RTL9010AA | [Flagchip (旗芯微)](https://www.flagchip.com.cn/en/) — даташит FC7300 доступен по запросу |
+| [`fc7300/FC7300_Demo_Schematic_JL_V2.0.pdf`](fc7300/FC7300_Demo_Schematic_JL_V2.0.pdf) | FC7300 Demo Board V2.0 | Схема демо-платы с 1000Base-T1 PHY JL3113A + U3800 TD6810 | [Flagchip (旗芯微)](https://www.flagchip.com.cn/en/) |
+| [`fc7300/FC7300_Demo_Board_3D_Top.jpg`](fc7300/FC7300_Demo_Board_3D_Top.jpg) | FC7300 Demo Board | 3D-рендер демо-платы (вид сверху) | — |
+| [`can/TJA1043.pdf`](can/TJA1043.pdf) | NXP **TJA1043** | CAN FD transceiver (CAN2, U4400 на демо-плате) | [NXP TJA1043 datasheet](https://www.nxp.com/docs/en/data-sheet/TJA1043.pdf) · [product page](https://www.nxp.com/products/automotive-and-industrial-interfaces/can-interfaces/can-transceivers/high-speed-can-transceivers/tja1043) |
+| [`eth/yt8011-1gbe-t1.pdf`](eth/yt8011-1gbe-t1.pdf) | NXP/Yutai **YT8011A** | 1000Base-T1 automotive PHY (U3100 на демо-плате V1.0) | [NXP YT8011A datasheet](https://www.nxp.com/docs/en/data-sheet/YT8011A.pdf) |
+| [`rtc/PCF8563.pdf`](rtc/PCF8563.pdf) | NXP **PCF8563** | RTC/Calendar, I²C-bus | [NXP PCF8563 datasheet](https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf) |
+| [`hat/2-CH-CAN-FD-HAT-Rev2.1-Schematic.pdf`](hat/2-CH-CAN-FD-HAT-Rev2.1-Schematic.pdf) | Waveshare **2-CH CAN FD HAT** Rev2.1 | Схема изолированного 2-канального CAN FD HAT (MCP2518FD + TJA1043/TJA1057) | [Waveshare product page](https://www.waveshare.com/2-ch-can-fd-hat.htm) |
+
+> Примечание: локальные PDF дублируют содержимое официальных даташитов (за исключением
+> схем плат, которые публикуются только вендорами — ArmSoM, Flagchip, Waveshare).
+> При изменении версий компонентов обновлять оба местa: локальный файл и ссылку в таблице.
+
 ## Схемы отладок FC7300
 
 ### Основные отличия схем FC7300 Demo V1.0 YT → V2.0 JL
