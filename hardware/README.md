@@ -7,7 +7,7 @@ Hardware design files, component selection, and assembly references for the CAN 
 | File / Dir       | Description                                      |
 |------------------|--------------------------------------------------|
 | `bom.md`         | Bill of materials with part numbers and sources  |
-| `schematics/`    | Schematics and wiring for the FC7300 HAT, SBC, power and wake-up |
+| `schematics/`    | Schematics and wiring: [FC7300 HAT](schematics/fc7300-hat-fbd.md), [pinout](schematics/fc7300-hat-pinout.md), [power](schematics/power.md), [SBC SPI](schematics/40-pin-sige7-spi.md), [wake-up](schematics/can-wakeup.md), [RP2040 controller](schematics/system_controller.md) — [index](schematics/README.md) |
 | `pinout/`        | FC7300 BGA320 pinout tables (vendor mux sheet + per-bank sheets) |
 | `pdf/`           | Reference PDFs (SBC boards, FC7300 demo boards, transceivers) |
 
