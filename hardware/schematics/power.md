@@ -75,14 +75,13 @@ The FC7300 CAN FD shield (8-CH) is powered by three on-board regulators fed dire
 | Rail | Regulator | Load on shield |
 | :--- | :--- | :--- |
 | **5 V / 3 A** | Buck (12 V → 5 V) | CAN transceivers (IO), RGB LED |
-| **3.3 V / 3 A** | Buck (12 V → 3.3 V) | 1000Base-T1 Ethernet PHY, uC, NOR Flash and remaining peripheral |
-| **1.6 V / 3 A** | Low-noise LDO / Buck (3.3 V or 12 V → 1.6 V) | FC7300F8MDT core (`uC`) |
+| **3.3 V / 3 A** | Buck (12 V → 3.3 V) | 1000Base-T1 Ethernet PHY, NOR Flash and remaining peripheral, **input of the 1.6 V regulator** |
+| **1.6 V / 3 A** | Low-noise LDO / Buck (3.3 V → 1.6 V) | FC7300F8MDT core (`uC`) |
 
 ```mermaid
 flowchart LR
     MAIN["12 V (KL30 / KL15)"] --> REG5["Buck 12V → 5V / 3A"]
     MAIN --> REG33["Buck 12V → 3.3V / 3A"]
-    MAIN --> REGLDO["Buck/LDO → 1.6V / 3A"]
 
     REG5 --> CAN["CAN transceivers<br/>(IO)"]
     REG5 --> RGB["RGB LED"]
@@ -90,6 +89,7 @@ flowchart LR
     REG33 --> ETH["1000Base-T1<br/>Ethernet PHY"]
     REG33 --> FLASH["NOR Flash"]
     REG33 --> PERI["Other<br/>peripheral"]
+    REG33 --> REGLDO["Buck/LDO 3.3V → 1.6V / 3A"]
 
     REGLDO --> UC["FC7300F8MDT<br/>(uC core)"]
 
@@ -108,11 +108,15 @@ flowchart LR
 
 > **Notes**
 > - The 1.6 V rail is the **core supply** of FC7300F8MDT (VDD_HV_A / VDD_CORE domain on the BGA320).
->   Keep it low-noise; route the sense lines directly to the uC pins.
+>   It is derived from the 3.3 V rail (cascaded regulator) to keep the noise floor low; route the
+>   sense lines directly to the uC pins.
 > - The 5 V rail powers only the **I/O side** of the CAN transceivers (and the RGB LED); the
 >   transceivers' VBAT pin is wired to 12 V so that wake-up on the CAN bus remains available
 >   even when the uC is in deep sleep.
-> - The three regulators are independent — a fault on one rail does not pull the others down.
+> - The 3.3 V regulator must supply the peripheral loads **plus** the 1.6 V regulator input
+>   current (≈ 1.6 V · 3 A / η ≈ 1.5 A at η ≈ 90 %). Budget the 3.3 V rail accordingly.
+> - The two primary regulators (5 V and 3.3 V) are independent — a fault on one rail does not
+>   pull the other down. The 1.6 V rail follows the 3.3 V rail (cascaded).
 
 ### Design Considerations
 
