@@ -72,6 +72,11 @@ The FC7300 CAN FD shield (8-CH) is powered by three on-board regulators fed dire
 12 V automotive source (KL30 / KL15). 12 V is also routed **directly** to the CAN transceivers
 `VBAT` (no regulator in between — keeps wake-up alive in any SBC sleep state).
 
+> **UPS option:** when main power is lost, the shield's 12 V input can be fed from the **backup
+> power path** above (LiFePO4 boost output). In that mode the three shield regulators and the
+> CAN `VBAT` stay alive from the battery rail, so the 8 CAN FD channels remain functional during
+> a brownout.
+
 | Rail | Regulator | Load on shield |
 | :--- | :--- | :--- |
 | **5 V / 3 A** | Buck (12 V → 5 V) | CAN transceivers (IO), RGB LED |
