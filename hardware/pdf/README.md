@@ -11,14 +11,23 @@
 | [`fc7300/FC7300_Demo_V1.0_Schematic_YT.pdf`](fc7300/FC7300_Demo_V1.0_Schematic_YT.pdf) | FC7300 Demo Board V1.0 | Схема демо-платы с 1000Base-T1 PHY YT8011A / RTL9010AA | [Flagchip (旗芯微)](https://www.flagchip.com.cn/en/) — даташит FC7300 доступен по запросу |
 | [`fc7300/FC7300_Demo_Schematic_JL_V2.0.pdf`](fc7300/FC7300_Demo_Schematic_JL_V2.0.pdf) | FC7300 Demo Board V2.0 | Схема демо-платы с 1000Base-T1 PHY JL3113A + U3800 TD6810 | [Flagchip (旗芯微)](https://www.flagchip.com.cn/en/) |
 | [`fc7300/FC7300_Demo_Board_3D_Top.jpg`](fc7300/FC7300_Demo_Board_3D_Top.jpg) | FC7300 Demo Board | 3D-рендер демо-платы (вид сверху) | — |
-| [`can/TJA1043.pdf`](can/TJA1043.pdf) | NXP **TJA1043** | CAN FD transceiver (CAN2, U4400 на демо-плате) | [NXP TJA1043 datasheet](https://www.nxp.com/docs/en/data-sheet/TJA1043.pdf) · [product page](https://www.nxp.com/products/automotive-and-industrial-interfaces/can-interfaces/can-transceivers/high-speed-can-transceivers/tja1043) |
+| [`can/TJA1043-C140826.pdf`](can/TJA1043-C140826.pdf) | NXP **TJA1043** | CAN FD transceiver (CAN2, U4400 на демо-плате) | [NXP TJA1043 datasheet](https://www.nxp.com/docs/en/data-sheet/TJA1043.pdf) · [product page](https://www.nxp.com/products/automotive-and-industrial-interfaces/can-interfaces/can-transceivers/high-speed-can-transceivers/tja1043) · LCSC C140826 |
+| [`can/TJA1042-C132227.pdf`](can/TJA1042-C132227.pdf) | NXP **TJA1042** | High-speed CAN transceiver со Standby mode (Rev. 11): ISO 11898-2:2016, SAE J2284, CAN FD fast phase до 5 Mbit/s, wake-up по шине, V_IO 3.3–5 V; эталон по AZKN9125P (совместим с TJA1042T/3; CAN1/CAN4/CAN6 на демо-плате) | [NXP TJA1042 datasheet](https://www.nxp.com/docs/en/data-sheet/TJA1042.pdf) · LCSC C132227 |
 | [`eth/yt8011-1gbe-t1.pdf`](eth/yt8011-1gbe-t1.pdf) | NXP/Yutai **YT8011A** | 1000Base-T1 automotive PHY (U3100 на демо-плате V1.0) | [NXP YT8011A datasheet](https://www.nxp.com/docs/en/data-sheet/YT8011A.pdf) |
+| [`lin/TJA1021.pdf`](lin/TJA1021.pdf) | NXP **TJA1021** | ISO 17987 / LIN 2.x / SAE J2602 transceiver (Rev. 9): до 20 kBd (LIN 2.2/2.2A), pin-to-pin с TJA1020/MC33662(B), SO8/HVSON8; эталон по TJA1021T/20 на демо-плате (LIN1–LIN4) | [NXP TJA1021 datasheet](https://www.nxp.com/docs/en/data-sheet/TJA1021.pdf) |
 | [`rtc/PCF8563.pdf`](rtc/PCF8563.pdf) | NXP **PCF8563** | RTC/Calendar, I²C-bus | [NXP PCF8563 datasheet](https://www.nxp.com/docs/en/data-sheet/PCF8563.pdf) |
 | [`hat/2-CH-CAN-FD-HAT-Rev2.1-Schematic.pdf`](hat/2-CH-CAN-FD-HAT-Rev2.1-Schematic.pdf) | Waveshare **2-CH CAN FD HAT** Rev2.1 | Схема изолированного 2-канального CAN FD HAT (MCP2518FD + TJA1043/TJA1057) | [Waveshare product page](https://www.waveshare.com/2-ch-can-fd-hat.htm) |
+| [`conn/WJ15EDGRC-3.5.pdf`](conn/WJ15EDGRC-3.5.pdf) | Cixi Wanjie (慈溪市万捷电子) **WJ15EDGRC-3.5/3.81** | Plug-in клеммная колодка (PCB-разъём): 8 A / 300 V (UL), 7 A / 160 V (IEC), шаг 3.5 / 3.81 мм, 2–24 позиции, wave soldering, PA66 UL94V-0, −40…+105 °C | — |
+| [`conn/DS1023-2X20S21.pdf`](conn/DS1023-2X20S21.pdf) | CONNFLY (晨翔电子) **DS1023-2X20S21** | Гнездовой штырьковый разъём 2×20 (40 пинов), шаг 2.54 мм, straight, покрытие 2 (Ni + gold flash), высота профиля 8.5 мм; 500 V AC, 20 mΩ, −40…+105 °C (чертёж C-DS1023-XXX1-B) | — |
+| [`conn/pld/ds1021-series.pdf`](conn/pld/ds1021-series.pdf) | CONNFLY (晨翔电子) **серия DS1021** | Гнездовые штырьковые разъёмы 2.54 мм: однорядные 1x1–1x40, двухрядные 2x1–2x40, трёхрядные 3x1–3x40; 3 A / 250 V AC, 600 V AC, gold flash, PBT UL94V-0, −40…+105 °C | — |
+| [`prot/sm24canb-02htg-l-C41376477.pdf`](prot/sm24canb-02htg-l-C41376477.pdf) | Shenzhen Pielenst (TECHPUBLIC) **SM24CANB-02HTG-L** | Массив ESD-защитных диодов для CAN-линий (2 диода, SOT23): V_RWM 24 V, двунаправленный, 280 W / 6 A пиковой импульса (8/20 мкс), IEC 61000-4-2 ±30 kV, EFT 40 A, молния 6 A, V_C 55 V, −55…+125 °C | [szpielenst.com](https://www.szpielenst.com) · LCSC C41376477 |
+| [`nand/MKDN512GCL-ZC-C52753986.pdf`](nand/MKDN512GCL-ZC-C52753986.pdf) | MK Founder **MKDN512GCL-ZC** | Nano SD NAND 512 Gbit (≈64 ГБ), TLC, 80/29 MB/s (чтение/запись), до 208 МГц, SD- и SPI-режимы, встроенный HW ECC, wear leveling; LGA-16 9×13 мм, −25…+85 °C | [MK Founder](https://www.mkfounder.com) · LCSC C52753986 |
 
 > Примечание: локальные PDF дублируют содержимое официальных даташитов (за исключением
-> схем плат, которые публикуются только вендорами — ArmSoM, Flagchip, Waveshare).
+> схем плат и вендорских чертёжей/даташитов разъёмов и защиты, которые публикуются только
+> производителями — ArmSoM, Flagchip, Waveshare, CONNFLY, Cixi Wanjie, Shenzhen Pielenst, MK Founder).
 > При изменении версий компонентов обновлять оба местa: локальный файл и ссылку в таблице.
+> Код дистрибьютора LCSC (C…) добавлен в имена файлов новых компонентов (напр. `TJA1043-C140826.pdf` = LCSC C140826).
 
 ## Схемы отладок FC7300
 
