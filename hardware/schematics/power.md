@@ -112,7 +112,9 @@ flowchart LR
 ```
 
 > **Notes**
-> - The 1.6 V rail is the **core supply** of FC7300F8MDT (VDD_HV_A / VDD_CORE domain on the BGA320).
+> - The 1.6 V rail is the **V15 core supply** of FC7300F8MDT (pins V15_0…V15_3 on the BGA320),
+>   i.e. the **external V15 mode**: `V15_CFG` must be pulled up to VDD_HV_A, and V15 is powered up
+>   only after VDD_HV_A reaches 2.3 V (see [`v15_mcu-config.md`](v15_mcu-config.md)).
 >   It is derived from the 3.3 V rail (cascaded regulator) to keep the noise floor low; route the
 >   sense lines directly to the uC pins.
 > - The 5 V rail powers only the **I/O side** of the CAN transceivers (and the RGB LED); the

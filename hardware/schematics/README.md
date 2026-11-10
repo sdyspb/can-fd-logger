@@ -25,6 +25,7 @@
 | [`fc7300-hat-fbd.md`](fc7300-hat-fbd.md) | Диаграмма подключения всех интерфейсов к FC7300F8MDT (CAN, RGMII, SPI, I2C, UART, SWD/JTAG, RESET/ISP) |
 | [`fc7300-hat-pinout.md`](fc7300-hat-pinout.md) | Полный пинаут BGA320 под шилд: активные интерфейсы, MUX-режимы, домены питания, отладочные сигналы |
 | [`power.md`](power.md) | Схема питания шилда: 12 V → 5 V / 3.3 V / 1.6 V (три регулятора), CAN VBAT, опция UPS от LiFePO4 |
+| [`v15_mcu-config.md`](v15_mcu-config.md) | Конфигурация V15 (1.5 V) ядра FC7300: V15_CFG / V15_BASE_DRIVER, три режима источника (внешний / NPN / внутр. LDO), V15_MCU |
 | [`sdcard.md`](sdcard.md) | microSD на шилде: анализ (SDMMC/SDIO в FC7300 нет) и подключение карты в SPI-режиме к FCSPI5 |
 
 ### Этап 2 — Подключение шилда к одноплатнику (Stage 2)
@@ -57,6 +58,7 @@
 | [`fc7300-hat-fbd.md`](fc7300-hat-fbd.md) | 1 | Диаграмма интерфейсов FC7300F8MDT (CAN, RGMII, SPI, I2C, UART, SWD, RESET) |
 | [`fc7300-hat-pinout.md`](fc7300-hat-pinout.md) | 1 | Пинаут BGA320 для шилда: MUX, домены, отладка |
 | [`power.md`](power.md) | 1 + 2 | Питание: 12 V PD, LiFePO4 UPS, FC7300 shield rails (5 V / 3.3 V / 1.6 V), CAN VBAT |
+| [`v15_mcu-config.md`](v15_mcu-config.md) | 1 | V15 (1.5 V core): V15_CFG / V15_BASE_DRIVER, режимы источника (внешний / NPN / LDO), PMC-регистры, V15_MCU |
 | [`sdcard.md`](sdcard.md) | 1 | microSD: SPI-режим карты на FCSPI5 (HS pad, 18.75 МГц), CD-детект, ESD; альтернатива — паянная SD NAND |
 | [`40-pin-sige7-spi.md`](40-pin-sige7-spi.md) | 2 | 40-pin Sige7 SPI pinout (SPI0 / SPI1 / SPI3) |
 | [`spi-wiring-40pin-sige7.md`](spi-wiring-40pin-sige7.md) | 2 | Адаптер 4 × MCP251xFD shields → Sige7 40-pin (pin map, DT, jumpers) |
