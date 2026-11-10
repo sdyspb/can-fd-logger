@@ -2,6 +2,8 @@
 
 Automotive CAN / CAN FD logger built on a single-board computer running Armbian.
 
+![CAN FD logger — multi-lock PD enclosure](images/can-fd-logger-multilock-pd.png)
+
 ## Overview
 
 A standalone in-vehicle device that records raw CAN and CAN FD frames
