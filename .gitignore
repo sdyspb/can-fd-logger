@@ -12,3 +12,10 @@ dist/
 .vscode/
 .idea/
 .clinerules/
+
+# AI agent local files (rules, sessions, checkpoints) — never commit
+.entire/
+.pi/
+.claude/
+/AGENTS.md
+/CLAUDE.md
