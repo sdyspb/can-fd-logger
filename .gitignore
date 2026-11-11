@@ -5,6 +5,8 @@ venv/
 build/
 dist/
 *.egg-info/
+# Office lock/temp files (Excel/Word ~$ lockers)
+~$*
 *.log
 *.bin
 *.blf
